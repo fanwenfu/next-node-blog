@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { SampleComponent } from "../components/SampleComponent";
 import "../assets/less/style.less";
 import "../assets/less/index.less";
+import axios from "axios";
 interface IProps {
   userData?: any;
   articleList?: any;
@@ -13,15 +14,19 @@ interface IState {
   showNav: boolean;
   animated: "" | "bounceInDown" | "bounceOutUp";
   showBlog: boolean;
+  showArticle: boolean;
+  articleData: any;
 }
 class IndexPage extends React.Component<IProps, IState> {
   // 异步获取 JS 普通对象，并绑定在props上当服务渲染时, 我是最先执行的声明周期函数  first
-  static async getInitialProps({ $axios }) {
+  static async getInitialProps({ $axios, req }) {
+    // const axioscfg = req ? { baseURL: "http://localhost:3001" } : {};
     //   $axios.get("/product/list");
     const [res1, res2] = await Promise.all([
-      $axios.get("/user?id=1"),
-      $axios.get("/article/list")
+      axios.get("http://localhost:3000/user?id=1"),
+      axios.get("http://localhost:3000/article/list"),
     ]);
+    // const userData = await axios.get("/api/article/list");
     const userData = res1.data.result;
     const articleList = res2.data.result;
 
@@ -34,26 +39,29 @@ class IndexPage extends React.Component<IProps, IState> {
     this.state = {
       showNav: false,
       animated: "",
-      showBlog: false
+      showBlog: false,
+      showArticle: false,
+      articleData: "",
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const userData = await axios.get("/api/article/list");
     console.log(this.props.userData, this.props.articleList, "请求回来的数据");
   }
   navClick = () => {
     if (!this.state.showNav) {
       this.setState({
         showNav: true,
-        animated: "bounceInDown"
+        animated: "bounceInDown",
       });
     } else {
       this.setState({
-        animated: "bounceOutUp"
+        animated: "bounceOutUp",
       });
       setTimeout(() => {
         this.setState({
           showNav: false,
-          animated: ""
+          animated: "",
         });
       }, 500);
     }
@@ -62,19 +70,36 @@ class IndexPage extends React.Component<IProps, IState> {
   };
   onBlogClick = () => {
     this.setState({
-      showBlog: !this.state.showBlog
+      showBlog: !this.state.showBlog,
+    });
+  };
+  onArticleClick = async (id: string) => {
+    const articleData = await axios.get("/api/article/list?id=" + id);
+    console.log(articleData);
+    this.setState({
+      showArticle: !this.state.showArticle,
+      articleData: articleData.data.result,
     });
   };
   public render() {
     return (
       <div>
-        <Head>
-          <title>fan's blog</title>
+        {/* <Head>
+          <title>范文富的博客</title>
+          <meta name="title" content="范文富的博客"></meta>
+          <meta
+            name="keywords"
+            content="范文富，web前端开发，nuxt"
+          ></meta>
+          <meta
+            name="description"
+            content="web前端开发工程师 @ 某不知名企业 技术栈：vue单页多页应用，nuxt，next，react-native，vant，mintui，ant-design-mobile-rn，GraphQL和RESTful"
+          ></meta>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
-        </Head>
+        </Head> */}
         {/* <SampleComponent title={"Index Page"} linkTo="/other" /> */}
         <span onClick={this.navClick} className="mobile btn-mobile-menu">
           {this.state.showNav ? (
@@ -94,7 +119,7 @@ class IndexPage extends React.Component<IProps, IState> {
             background:
               "url(/static/images/backgroundcover.jpg) top left no-repeat #666666",
             backgroundSize: "100% 100%",
-            width: this.state.showBlog ? "30%" : "100%"
+            width: this.state.showBlog ? "30%" : "100%",
           }}
         >
           {this.props.userData ? (
@@ -130,9 +155,7 @@ class IndexPage extends React.Component<IProps, IState> {
                   </p>
                   <hr className="panel-cover__divider panel-cover__divider--secondary" />
                   <p className="panel-cover__description">
-                    <a href="https://objccn.io/products/">
-                      {this.props.userData.introduction}
-                    </a>
+                    {this.props.userData.introduction}
                   </p>
                   <div
                     className={`navigation-wrapper ${
@@ -218,45 +241,88 @@ class IndexPage extends React.Component<IProps, IState> {
         <div
           className="content-wrapper"
           style={{
-            width: this.state.showBlog ? "70%" : "0"
+            width: this.state.showBlog ? "70%" : "0",
           }}
         >
           <div className="content-wrapper__inner">
-            <div className="content-wrapper-close" onClick={this.onBlogClick}>
-              <i className="iconfont">&#xe600;</i>
-            </div>
+            {this.state.showArticle ? (
+              <div
+                className="content-wrapper-close"
+                onClick={() => {
+                  this.setState({
+                    showArticle: false,
+                  });
+                }}
+              >
+                <i
+                  style={{ fontSize: "20px", marginRight: "4px" }}
+                  className="iconfont"
+                >
+                  &#xe608;
+                </i>
+                <i>返回列表</i>
+              </div>
+            ) : null}
+
             <div className="main-post-list">
-              <ol className="post-list">
-                {this.props.articleList.map((item: any) => {
-                  return (
-                    <li key={item.id}>
-                      <h2 className="post-list__post-title post-title">
-                        <a
-                          href="/2020/03/improve-delegate/"
-                          title="访问 使用 protocol 和 callAsFunction 改进 Delegate"
-                        >
-                          {item.title}
-                        </a>
-                      </h2>
-                      <p className="excerpt">{item.description}</p>
-                      <div className="post-list__meta">
-                        <time className="post-list__meta--date date">
-                          {item.date}
-                        </time>
-                        •{" "}
-                        <span className="post-list__meta--tags tags">fan</span>
-                        <a
-                          className="btn-border-small"
-                          href="/2020/03/improve-delegate/"
-                        >
-                          继续阅读
-                        </a>
-                      </div>
-                      <hr className="post-list__divider" />
-                    </li>
-                  );
-                })}
-              </ol>
+              {!this.state.showArticle ? (
+                <ol className="post-list">
+                  {this.props.articleList.map((item: any) => {
+                    return (
+                      <li key={item.id}>
+                        <h2 className="post-list__post-title post-title">
+                          <a
+                            onClick={() => this.onArticleClick(item.id)}
+                            title={item.title}
+                          >
+                            {item.title}
+                          </a>
+                        </h2>
+                        <p className="excerpt">{item.description}</p>
+                        <div className="post-list__meta">
+                          <time className="post-list__meta--date date">
+                            {item.date}
+                          </time>
+                          •{" "}
+                          <span className="post-list__meta--tags tags">
+                            fan
+                          </span>
+                          <a
+                            className="btn-border-small"
+                            onClick={() => this.onArticleClick(item.id)}
+                          >
+                            继续阅读
+                          </a>
+                        </div>
+                        <hr className="post-list__divider" />
+                      </li>
+                    );
+                  })}
+                </ol>
+              ) : (
+                <div className="post-container">
+                  <header className="post-header">
+                    <div className="post-meta">
+                      <time className="post-meta__date date">
+                        {this.state.articleData.date}
+                      </time>{" "}
+                      •{" "}
+                      <span className="post-meta__tags tags">
+                        {this.state.articleData.author}
+                      </span>
+                    </div>
+                    <h1 className="post-title">
+                      {this.state.articleData.title}
+                    </h1>
+                  </header>
+                  <section
+                    className="post"
+                    dangerouslySetInnerHTML={{
+                      __html: this.state.articleData.html,
+                    }}
+                  ></section>
+                </div>
+              )}
               <hr className="post-list__divider " />
             </div>
 
@@ -264,12 +330,14 @@ class IndexPage extends React.Component<IProps, IState> {
               <footer>
                 <span className="footer__copyright">
                   本站由 <a href="https://onev.cat">@fan</a> 创建，采用{" "}
-                  <a href="https://github.com/onevcat/vno-jekyll">
+                  <a href="https://github.com/fanwenfu/next-antd-node-blog">
                     next + antd
                   </a>{" "}
                   作为主题，您可以在 GitHub 找到
-                  <a href="https://github.com/fanwenfu/fan-blog">本站源码</a> -
-                  © 2020
+                  <a href="https://github.com/fanwenfu/next-antd-node-blog">
+                    本站源码
+                  </a>{" "}
+                  - © 2020
                 </span>
               </footer>
             </section>

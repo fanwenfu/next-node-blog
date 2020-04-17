@@ -1,20 +1,25 @@
 import axios from "axios";
 
 export default () => {
-  const options = {
-    baseURL: process.browser ? location.origin : "http://localhost:3000"
-  };
+//   const options = {
+//     baseURL: "http://localhost:3000",
+//   };
 
-  const inst = axios.create(options);
+  const inst = axios.create();
 
-  // 全局处理
-  inst.defaults.timeout = 15000;
+  // 全局处理  
+    // inst.defaults.baseURL = "http://localhost:3000";
+    // inst.defaults.axios = {
+    //   host:"http://localhost",
+    //   port:"3000",
+    // };
+    inst.defaults.timeout = 15000;
   inst.defaults.headers.common["platform"] = "web";
   inst.defaults.headers.common["timezone"] =
     new Date().getTimezoneOffset() / 60;
 
   // 初始化
-  inst.init = function(req) {
+  inst.init = function (req) {
     if (process.browser) {
     } else {
       const content = req.headers.cookie;

@@ -3,8 +3,8 @@ var mysql = require("mysql");
 var pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "dd168899",
-  database: "Mysql",
+  password: "***",//数据库密码
+  database: "mysql",
   multipleStatements:true
 });
 // var connection = mysql.createConnection({

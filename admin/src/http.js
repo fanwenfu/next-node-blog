@@ -4,7 +4,7 @@ import qs from "qs";
 axios.defaults.timeout = 5000; //响应时间
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=UTF-8"; //配置请求头
-axios.defaults.baseURL = "http://localhost:3000"; //配置接口地址
+axios.defaults.baseURL = ""; //配置接口地址
 axios.defaults.withCredentials = true; //必须使用cookie
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use(
@@ -37,37 +37,39 @@ axios.interceptors.response.use(
 );
 
 //返回一个Promise(发送post请求)
-export function fetchPost(url, params) {
+export function fetchPost(url, params,client) {
+  const base = client == 2 ? "/navy" : "/api";
   return new Promise((resolve, reject) => {
     axios
-      .post(url, params)
+      .post(base + url, params)
       .then(
-        response => {
+        (response) => {
           resolve(response);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       )
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
 }
 ////返回一个Promise(发送get请求)
-export function fetchGet(url, param) {
+export function fetchGet(url, param,client) {
+  const base = client == 2 ? "/navy" : "/api";
   return new Promise((resolve, reject) => {
     axios
-      .get(url, { params: param })
+      .get(base + url, { params: param })
       .then(
-        response => {
+        (response) => {
           resolve(response);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       )
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });

@@ -6,18 +6,18 @@ const cors = require("cors");
 const connection = require("./mysql");
 app.use(
   cors({
-    origin: "http://127.0.0.1:8080",
+    origin: "http://localhost:8080",
     methods: ["GET", "POST"],
     alloweHeaders: [
       "Conten-Type",
       "Content-Length",
       "Accept",
       "X-Requested-With",
-      "Authorization"
+      "Authorization",
     ],
     preflightContinue: false,
     optionsSuccessStatus: 200,
-    credentials: true // 是否带cookie
+    credentials: true, // 是否带cookie
   })
 );
 //引入  bodyParser 方法

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <el-container style="height:100vh;border: 1px solid #eee">
+    <router-view v-if="isDisplay" />
+    <el-container v-else style="height:100vh;border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu router :default-active="route.name">
           <el-menu-item index="Home" route="/">
@@ -71,7 +72,7 @@ import {
   //   Submenu,
   Menu,
   //   MenuItemGroup,
-  MenuItem
+  MenuItem,
 } from "element-ui";
 export default {
   components: {
@@ -85,30 +86,37 @@ export default {
     // elSubmenu: Submenu,
     elMenu: Menu,
     // elMenuItemGroup: MenuItemGroup,
-    elMenuItem: MenuItem
+    elMenuItem: MenuItem,
   },
   data() {
     return {
-      route: this.$route
+      route: this.$route,
+      noWarpperRoute: ["Login"],
     };
   },
+  computed: {
+    isDisplay() {
+      return this.noWarpperRoute.find(
+        (item) =>
+          this.route && this.route.name && this.route.name.indexOf(item) != -1
+      );
+    },
+  },
   mounted() {
-    console.log(this.$route, "hahah");
+    //   console.log(this.route)
   },
   methods: {
     toHome() {
       this.$router.push({
-        path: "home"
+        path: "home",
       });
-    }
+    },
   },
   watch: {
     $route(n) {
-			console.log(n);
-			this.route = n;
-			console.log(this.route)
-    }
-  }
+      this.route = n;
+    },
+  },
 };
 </script>
 <style lang="less">
