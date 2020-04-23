@@ -1,7 +1,4 @@
 import React from "react";
-import { Head } from "../next";
-import { Button } from "antd";
-import { SampleComponent } from "../components/SampleComponent";
 import "../assets/less/style.less";
 import "../assets/less/index.less";
 import axios from "axios";
@@ -71,6 +68,7 @@ class IndexPage extends React.Component<IProps, IState> {
   onBlogClick = () => {
     this.setState({
       showBlog: !this.state.showBlog,
+      showNav:false
     });
   };
   onArticleClick = async (id: string) => {
@@ -113,13 +111,15 @@ class IndexPage extends React.Component<IProps, IState> {
           )}
           <i className="fa fa-angle-up btn-mobile-close__icon hidden"></i>
         </span>
+        {/* 简历部分 */}
         <div
-          className={"warpper"}
+          className={`warpper ${
+            this.state.showBlog ? "warpper-show-blog" : ""
+          }`}
           style={{
             background:
               "url(/static/images/backgroundcover.jpg) top left no-repeat #666666",
             backgroundSize: "100% 100%",
-            width: this.state.showBlog ? "30%" : "100%",
           }}
         >
           {this.props.userData ? (
@@ -127,20 +127,20 @@ class IndexPage extends React.Component<IProps, IState> {
               <div className={"panel-main_inner panel-inverted"}>
                 <div className={"panel-main__content"}>
                   <a
-                    href="/#blog"
-                    title="前往 OneV's Den 的主页"
+                    href="/"
+                    title="前往 Fan's 的主页"
                     className="blog-button"
                   >
                     <img
                       src="/static/images/avatar.jpg"
-                      alt="OneV's Den logo"
+                      alt="Fan's logo"
                       className="panel-cover__logo logo"
                     />
                   </a>
                   <h1 className="panel-cover__title panel-title">
                     <a
-                      href="/#blog"
-                      title="link to homepage for OneV's Den"
+                      href="/"
+                      title="返回主页"
                       className="blog-button"
                     >
                       {this.props.userData.name}
@@ -238,11 +238,11 @@ class IndexPage extends React.Component<IProps, IState> {
           ) : null}
           <div className="panel-cover--overlay cover-blue"></div>
         </div>
+        {/* 文章部分 */}
         <div
-          className="content-wrapper"
-          style={{
-            width: this.state.showBlog ? "70%" : "0",
-          }}
+          className={`content-wrapper ${
+            this.state.showBlog ? "show-blog" : ""
+          }`}
         >
           <div className="content-wrapper__inner">
             {this.state.showArticle ? (
@@ -260,7 +260,7 @@ class IndexPage extends React.Component<IProps, IState> {
                 >
                   &#xe608;
                 </i>
-                <i>返回列表</i>
+                <span>返回列表</span>
               </div>
             ) : null}
 
@@ -329,7 +329,7 @@ class IndexPage extends React.Component<IProps, IState> {
             <section className="footer">
               <footer>
                 <span className="footer__copyright">
-                  本站由 <a href="https://onev.cat">@fan</a> 创建，采用{" "}
+                  本站由 <a href="http://www.fanlogs.cn">@fan</a> 创建，采用{" "}
                   <a href="https://github.com/fanwenfu/next-antd-node-blog">
                     next + antd
                   </a>{" "}
