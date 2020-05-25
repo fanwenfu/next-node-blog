@@ -1,6 +1,6 @@
 # next-antd-node-blog
 ## 必备环境：node，包安装工具可选择使用yarn or npm
-## 项目预览 http://47.107.44.19/
+## 项目预览 http://fanlogs.cn
 ## 项目启动步骤
 
 ### 1.服务端(node + express + mysql)
@@ -34,6 +34,8 @@ npm run dev
 
 ### 更新记录
 ```
+    2020.05.25
+        博客内容改用hook写法 & 优化页面内容
     2020.04.23
         更响应式样式bug 
     2020.04.17 

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const express = require("express");
 const next = require("next");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const compression = require("compression");
 const devProxy = {
   "/api": {
@@ -30,10 +31,9 @@ app
     }
     // Set up the proxy.
     if (dev && devProxy) {
-      const proxyMiddleware = require("http-proxy-middleware");
       console.log("进了这里？？？")
       Object.keys(devProxy).forEach(function (context) {
-        server.use(proxyMiddleware(context, devProxy[context]));
+        server.use(createProxyMiddleware(context, devProxy[context]));
       });
     }
 

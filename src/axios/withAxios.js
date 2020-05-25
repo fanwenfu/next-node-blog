@@ -1,7 +1,7 @@
 import React from "react";
-import configAxios from "./configAxios";
+import configAxios from "./axios";
 
-export default App => {
+export default (App) => {
   return class AppWithAxios extends React.Component {
     static async getInitialProps(appContext) {
       let appProps = {};
@@ -15,7 +15,7 @@ export default App => {
 
       return {
         ...appProps,
-        $axios: appContext.ctx.$axios
+        $axios: appContext.ctx.$axios,
       };
     }
 
