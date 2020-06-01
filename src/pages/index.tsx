@@ -4,7 +4,6 @@ import axios from "axios";
 import { options } from "../axios/axios";
 import Layout from "../components/Layout";
 import "../assets/less/index.less";
-// import Link from 'next/link'
 type props = {
   userData: UserData;
   articleList: [ArticleData];
@@ -216,7 +215,8 @@ const IndexPage = (props: props) => {
                           </span>
                           <a
                             className="btn-border-small"
-                            onClick={() => onArticleClick(item.id)}
+                            target="_blank"
+                            href={"/article/" + item.id}
                           >
                             继续阅读
                           </a>
@@ -285,6 +285,12 @@ export async function getServerSideProps() {
     };
   } catch (error) {
     console.log(error, "补货到的错误");
+    return {
+      props: {
+        userData: {},
+        articleList: [],
+      },
+    };
   }
   // By returning { props: posts }, the Blog component
   // will receive `posts` as a prop at build time
