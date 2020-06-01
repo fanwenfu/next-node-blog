@@ -6,7 +6,7 @@ const cors = require("cors");
 const connection = require("./mysql");
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: "http://www.fanlogs.cn:8080",
     methods: ["GET", "POST"],
     alloweHeaders: [
       "Conten-Type",
@@ -102,5 +102,5 @@ var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log("Example app listening at http://localhost", host, port);
+  console.log("Example app listening at", host, port);
 });

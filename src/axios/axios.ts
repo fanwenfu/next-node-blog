@@ -1,6 +1,6 @@
 import axios from "axios";
 export const options = {
-  baseURL: "http://47.107.44.19:3000",
+  baseURL: "http://www.fanlogs.cn:3000",
   timeout: 15000,
 };
 export default () => {

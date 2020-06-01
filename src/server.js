@@ -5,7 +5,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const compression = require("compression");
 const devProxy = {
   "/api": {
-    target: "http://localhost:3000",
+    target: "http://www.fanlogs.cn:3000",
     pathRewrite: { "^/api": "/" },
     changeOrigin: true,
   },

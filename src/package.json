@@ -1,7 +1,7 @@
 {
   "name": "fan-blog",
   "version": "1.0.0",
-  "proxy": "http://localhost:3000/api",
+  "proxy": "http://www.fanlogs.cn:3000/api",
   "scripts": {
     "dev": "cross-env PORT=9000 node server.js",
     "build": "next build",

@@ -5,16 +5,7 @@ const fs = require("fs"),
 
 const path = require("path");
 
-const includeFiles = [
-  "package.json",
-  "server.js",
-  "next.config.js",
-  ".babelrc",
-  "images.d.ts",
-  "next-env.d.ts",
-  "next.js",
-  "tsconfig.json"
-];
+const includeFiles = ["next.config.js","package.json"];
 
 /*
  * 复制目录中的所有文件包括子目录
@@ -86,12 +77,6 @@ const copyFile = () => {
 // copyDir("./src/.next", "./next-blog/build", readDir);
 // 复制目录
 copyDir("./src/static", "./next-blog/static", readDir);
-copyDir("./src/assets", "./next-blog/assets", readDir);
-copyDir("./src/components", "./next-blog/components", readDir);
-copyDir("./src/axios", "./next-blog/axios", readDir);
-copyDir("./src/pages", "./next-blog/pages", readDir);
-copyDir("./src/stores", "./next-blog/stores", readDir);
-
-
+copyDir("./src/.next", "./next-blog/.next", readDir);
 // 拷贝文件
 copyFile();

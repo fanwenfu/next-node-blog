@@ -37,9 +37,7 @@ const IndexPage = (props: props) => {
     setShowNav(false);
   };
   const onArticleClick = async (id: string) => {
-    const res:any = await axios.get(
-      "/api/article/list?id=" + id
-    );
+    const res: any = await axios.get("/api/article/list?id=" + id);
     console.log(res.data);
     setArticleData(res.data.result);
     setShowArticle(!showArticle);
@@ -273,7 +271,7 @@ const IndexPage = (props: props) => {
     </Layout>
   );
 };
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const [res1, res2] = await Promise.all([
       axios.get(options.baseURL + "/user?id=1"),

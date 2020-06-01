@@ -26,7 +26,6 @@
   ],
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    "axios/withAxios.js"
+    "**/*.tsx"
   ]
 }
