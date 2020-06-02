@@ -35,6 +35,10 @@ const IndexPage = (props: props) => {
     setShowBlog(!showBlog);
     setShowNav(false);
   };
+  const onBackClick = ()=>{
+      setShowBlog(false);
+      setShowNav(false);
+  }
   const onArticleClick = async (id: string) => {
     const res: any = await axios.get("/api/article/list?id=" + id);
     console.log(res.data);
@@ -95,6 +99,17 @@ const IndexPage = (props: props) => {
                   <div>
                     <nav className="cover-navigation cover-navigation--primary">
                       <ul className="navigation">
+                        {showNav ? (
+                          <li className="navigation__item">
+                            <a
+                              title="返回主页"
+                              className="blog-button"
+                              onClick={onBackClick}
+                            >
+                              主页
+                            </a>
+                          </li>
+                        ) : null}
                         <li className="navigation__item">
                           <a
                             onClick={onBlogClick}
@@ -104,12 +119,6 @@ const IndexPage = (props: props) => {
                             博客
                           </a>
                         </li>
-
-                        {/* <li className="navigation__item">
-                          <Link href={"/about"}>
-                            简历
-                          </Link>
-                        </li> */}
                       </ul>
                     </nav>
                   </div>

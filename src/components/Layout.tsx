@@ -32,6 +32,10 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta property="og:site_name" content="范文富"></meta>
       <link rel="icon" href="/static/favicon.ico" />
     </Head>
+    <a href="http://www.fanlogs.cn" style={{position:'absolute',left:'-2000px'}}>
+      嗨，我是范文富，一名前端开发工程师. 技术栈：vue，nuxt，react，react
+      native跨端开发，javascript，typescript，graphql，欢迎来撩
+    </a>
     {children}
   </div>
 );
