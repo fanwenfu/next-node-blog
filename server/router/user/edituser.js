@@ -1,3 +1,11 @@
+/*
+ * @Author: 范文富
+ * @Date: 2020-04-08 14:30:06
+ * @LastEditTime: 2020-06-02 10:44:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /next-antd-node-blog/server/router/user/edituser.js
+ */ 
 const express = require("express");
 const Router = express.Router();
 const connection = require("../../mysql");
@@ -52,8 +60,8 @@ Router.post("/", (req, res) => {
     .query(modSql, [
       body.name,
       body.description,
-      body.subtitle,
       body.introduction,
+      body.subtitle,
       body.datebirth,
       body.id
     ])

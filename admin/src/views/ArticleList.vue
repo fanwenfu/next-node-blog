@@ -3,6 +3,9 @@
     <el-button class="article-add" @click="handleAddClick" type="primary"
       >新增文章</el-button
     >
+    <el-button class="article-add" @click="showDel = !showDel" type="primary"
+      >显示删除按钮</el-button
+    >
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="date" label="日期" width="100">
       </el-table-column>
@@ -21,7 +24,11 @@
             size="small"
             >编辑</el-button
           >
-          <el-button @click="handleDelClick(scope.row)" type="text" size="small"
+          <el-button
+            v-if="showDel"
+            @click="handleDelClick(scope)"
+            type="text"
+            size="small"
             >删除</el-button
           >
         </template>
@@ -42,7 +49,8 @@ export default {
   },
   data() {
     return {
-      tableData: []
+      tableData: [],
+      showDel: false
     };
   },
   mounted() {
@@ -55,40 +63,29 @@ export default {
       });
     },
     handleClick(row) {
-      console.log(row);
+        window.location.href = `http://www.fanlogs.cn/article/` + row.id
     },
     handleEditClick(row) {
-      console.log(row);
       this.$router.push({
         path: "/article/" + row.id
       });
     },
-    handleDelClick(row) {
-      console.log(row);
+    handleDelClick(scope) {
+      const { row, $index } = scope;
       https
         .fetchPost("/article/delete", {
           ids: `[${row.id}]`
         })
-        .then(res => {
-          console.log(res.data);
-          //   this.productList = res.data.result;
+        .then(() => {
+          this.tableData.splice($index, 1);
         })
-        .catch(err => {
-          console.log(err);
-        });
-      console.log(row);
     },
     getProductList() {
       https
         .fetchGet("/article/list")
         .then(res => {
-          console.log(res.data);
           this.tableData = res.data.result;
-          //   this.productList = res.data.result;
         })
-        .catch(err => {
-          console.log(err);
-        });
     }
   }
 };
