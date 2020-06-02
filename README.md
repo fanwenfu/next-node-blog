@@ -1,4 +1,4 @@
-# next-antd-node-blog
+# next-node-blog
 ## 必备环境：node，包安装工具可选择使用yarn or npm
 ## 项目预览 http://fanlogs.cn
 ## 项目启动步骤
@@ -12,7 +12,7 @@ node index.js
 ```
 #### 已有功能 （个人信息接口，文章增删改查接口）
 
-### 2.启动web端(next.js + antd)
+### 2.启动web端(next)
 #### 启动步骤
 ```
 cd src
