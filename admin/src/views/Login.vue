@@ -72,8 +72,8 @@ export default {
         console.log(valid);
         if (
           valid &&
-          this.ruleForm.name == "fanwenfu" &&
-          this.ruleForm.pass == "123456"
+          this.ruleForm.name == "" &&
+          this.ruleForm.pass == ""
         ) {
           const leftTamp = 30 * 24 * 60 * 60 * 1000;
           Cookies.set("token", "1586491815070625eaf7cec5cedb58c30c4ce83737", {
