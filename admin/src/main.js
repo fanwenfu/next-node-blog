@@ -8,7 +8,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requireAuth)) {
     console.log("jinlai???");
     // 判断该路由是否需要登录权限
-    if (Cookies.get("token") == "1586491815070625eaf7cec5cedb58c30c4ce83737") {
+    if (Cookies.get("token") == "1") {
       next();
     } else {
       next({
