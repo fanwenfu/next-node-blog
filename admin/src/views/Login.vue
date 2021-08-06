@@ -72,11 +72,11 @@ export default {
         console.log(valid);
         if (
           valid &&
-          this.ruleForm.name == "" &&
-          this.ruleForm.pass == ""
+          this.ruleForm.name == "admin" &&
+          this.ruleForm.pass == "admin"
         ) {
           const leftTamp = 30 * 24 * 60 * 60 * 1000;
-          Cookies.set("token", "1586491815070625eaf7cec5cedb58c30c4ce83737", {
+          Cookies.set("token", "1", {
             expires: new Date(new Date().getTime() + leftTamp),
             path: "/",
           });
